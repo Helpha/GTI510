@@ -11,7 +11,7 @@
           </button>
           <!-- LOGO -->              
           <!-- TEXT BASED LOGO -->
-          <a class="navbar-brand" href="index.html">BookÉTS</a>              
+          <a class="navbar-brand" href="index.html">BookÉTSt</a>              
           <!-- IMG BASED LOGO  -->
          <!-- <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" alt="logo"></a> -->                    
         </div>
