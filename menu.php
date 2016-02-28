@@ -18,7 +18,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
             <li><a href="index.php">Accueil</a></li>
-            <li><a href="feature.html">Profil</a></li>
+            <li><a href="userDetail.php">Profil</a></li>
             <li class="active"><a href="service.html">Service</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
             <li class="dropdown">
