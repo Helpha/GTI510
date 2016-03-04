@@ -12,12 +12,13 @@
 	"id" => 0,
     "email" => "exemple@gmail.com",
     "name" => "exemple",
-	"isenable" => false
+	"isEnabled" => 0
 	));
 ?>
 <!DOCTYPE>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -54,6 +55,25 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<style>
+		.btn-success > span::before{
+			content:"Activé";
+		}
+		
+		.btn-danger > span::before{
+			content:"Désactivé";
+		}
+		
+		#usersAdminView{
+			width:100%;
+			color:white;
+		}
+		
+		#usersAdminView .btn{
+			min-width: 100px;
+			margin-top: 10px;
+		}
+	</style>
   </head>
   <body> 
 
@@ -80,33 +100,31 @@
   <section id="single-page-header">
     <div class="overlay">
       <div class="container">
-        <div class="row">
+        <div>
           <div class="col-md-8 col-sm-8 col-xs-12">
             <div class="single-page-header-left">
-				<table>
+				<table id="usersAdminView">
 					<thead>
 						<tr>
 							<th>Nom</th>
 							<th>Email</th>
 							<th>Reservations</th>
-							<th>Actif</th>
+							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
 							for($i = 0; $i < count($users); $i++)
 							{
+								$userId = $users[$i]['id']; 
+								$isEnable = $users[$i]['isEnabled'];
 						?>
 								<tr>
 									<td><?php echo $users[$i]['name']; ?></td>
 									<td><?php echo $users[$i]['email']; ?></td>
 									<td></td>
-									<td>
-										<?php if($users[$i]['isenable'] == true){ ?>
-											<button type="submit" name="action" value="disable" class="btn btn-danger" onclick="isEnable(<?php echo $users[$i]['id']; ?>,false);">Désactiver</button>
-										<?php }else{ ?>
-											<button type="submit" name="action" value="enable" class="btn btn-success" onclick="isEnable(<?php echo $users[$i]['id']; ?>,true);">Activer</button>
-										<?php } ?>
+									<td id="user_row_<?php echo $userId ?>">
+										<button type="submit" name="action" value="disable" class="btn <?php echo ($isEnable == 1 ? 'btn-success' : 'btn-danger') ?>" onclick="isEnable(<?php echo $userId . ',' . ($isEnable ? 1 : 0); ?>, this);"><span></span></button>
 									</td>
 								</tr>
 						<?php
@@ -120,7 +138,7 @@
             <div class="single-page-header-right">
               <form>
 				<div class="form-group">
-					<label for="email">Nombre Maximum de réservation</label>
+					<label for="email">Nombre maximum de réservations par utilisateur</label>
 					<div class="input-group">
 						<input type="number" min="0" class="form-control" id="maxReservationCount" name="maxReservationCount" placeholder=""/>
 					</div>
@@ -187,13 +205,18 @@
   <!-- Custom js -->
   <script type="text/javascript" src="assets/js/custom.js"></script>
   <script type="text/javascript">
-	function isEnable(id, action){
+	function isEnable(id, action, obj){
 		$.ajax({
         url:'userActivation.php',
         type:'post',
         data:{id : id, action : action},
         success:function(){
-            
+            if($(obj).hasClass('btn-success')){
+				$(obj).removeClass('btn-success').addClass('btn-danger');
+			}
+			else{
+				$(obj).removeClass('btn-danger').addClass('btn-success');
+			}
         }
     });
 	}

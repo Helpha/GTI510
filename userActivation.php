@@ -6,8 +6,7 @@
 		include_once("db/UserDB.php");
 		
 		$db = new UserDB();
-		
-		$db->Activate($userId, $action);
+		$db->Activate($userId, ($action ? 1 : 0));
 	}
 	else{
 		header("Location: index.php");

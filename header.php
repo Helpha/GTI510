@@ -1,4 +1,4 @@
- <header id="header">
+<header id="header">
     <!-- header top search -->
     <div class="header-top">
       <div class="container">
@@ -26,15 +26,136 @@
                   </div>
                 </li>
                 <li>
-                  <div class="mail" mailto>
+                  <div class="mail">
                     <i class="fa fa-envelope"></i>
-                    <a href="mailto:contact@bookets.com" target="_top">contactez-nous</a>
+                    contact@bookets.com
                   </div>
                 </li>
               </ul>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="header-login">
+			<?php if(isset($_SESSION['user']) && isset($_SESSION['user']['name'])){ ?>
+				<a class="login modal-form hidden" id="loginLink" data-target="#login-form" data-toggle="modal" href="#">Connexion / S'enregistrer</a>
+				<a class="login modal-form" id="logoutLink" href="signout.php">Se déconnecter</a>
+			<?php } else { ?>			  
+				<a class="login modal-form" id="loginLink" data-target="#login-form" data-toggle="modal" href="#">Connexion / S'enregistrer</a>
+				<a class="login modal-form hidden" id="logoutLink" href="signout.php">Se déconnecter</a>
+			<?php } ?>
             </div>
           </div>
         </div>
       </div>
     </div>
   </header>
+  
+  <!-- Start login modal window -->
+  <div aria-hidden="false" role="dialog" tabindex="-1" id="login-form" class="modal leread-modal fade in">
+    <div class="modal-dialog">
+      <!-- Start login section -->
+      <div id="login-content" class="modal-content">
+        <div class="modal-header">
+          <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title"><i class="fa fa-unlock-alt"></i>Connexion</h4>
+        </div>
+        <div class="modal-body">
+          <form id="signinForm" action="signin.php" method="POST">
+		    <div class="form-group">
+				<span class="label status"></span>
+			</div>
+            <div class="form-group">
+              <input type="text" name ="email" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" name="pwd" placeholder="Mot de passe" class="form-control">
+            </div>
+             <div class="loginbox">
+              <!--<label><input type="checkbox"><span>Remember me</span></label>-->
+              <button class="btn signin-btn" type="submit">Se connecter</button>
+            </div>                    
+          </form>
+        </div>
+        <div class="modal-footer footer-box">
+          <!--<a href="#">Forgot password ?</a>-->
+          <span>Désirez vous un compte ? <a id="signup-btn" href="#">S'enregistrer</a></span>            
+        </div>
+      </div>
+      <!-- Start signup section -->
+      <div id="signup-content" class="modal-content">
+        <div class="modal-header">
+          <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title"><i class="fa fa-lock"></i>S'enregistrer</h4>
+        </div>
+        <div class="modal-body">
+          <form id="signupForm" action="signup.php" method="POST">
+			  <div class="form-group">
+				<span class="label status"></span>
+			  </div>
+			<div class="form-group">
+              <input name ="email" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input name="name" placeholder="Nom" class="form-control">
+            </div>
+            <!--<div class="form-group">
+              <input placeholder="Username" class="form-control">
+            </div>-->
+            <div class="form-group">
+              <input type="password" name="pwd" placeholder="Mot de passe" class="form-control">
+            </div>
+			<div class="form-group">
+              <input type="password" name="confirmPwd" placeholder="Confirmation de mot de passe" class="form-control">
+            </div>
+            <div class="signupbox">
+              <span>Vous avez déjà un compte? <a id="login-btn" href="#">Se connecter.</a></span>
+            </div>
+            <div class="loginbox">
+              <!--<label><input type="checkbox"><span>Remember me</span><i class="fa"></i></label>-->
+              <button class="btn signin-btn" type="submit">S'enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End login modal window -->
+  
+    <script type="text/javascript">
+	$('#signinForm').submit( function() {  
+		var form = this;
+		
+        $.ajax({
+            url     : $(this).attr('action'),
+            type    : $(this).attr('method'),
+            data    : $(this).serialize(),
+            success : function( data ) {
+						var jsonResult = JSON.parse(data);
+						$('#signinForm .status').removeClass('label-success').removeClass('label-danger').addClass('label-'+jsonResult["status"]).html(jsonResult["message"]);						
+						setTimeout(function(){location.reload();},500);
+					  },
+            error   : function( xhr, err ) {
+							$('#signinForm .status').html(xhr);
+                            alert(err);
+                      }
+        });    
+        return false;
+    });
+	$('#signupForm').submit( function() {            
+        $.ajax({
+            url     : $(this).attr('action'),
+            type    : $(this).attr('method'),
+            data    : $(this).serialize(),
+            success : function( data ) {
+                        var jsonResult = JSON.parse(data);
+						$('#signupForm .status').removeClass('label-success').removeClass('label-danger').addClass('label-'+jsonResult["status"]).html(jsonResult["message"]);
+						setTimeout(function(){location.reload();},500);
+					  },
+            error   : function( xhr, err ) {
+                        $('#signupForm .status').html(xhr);
+                            alert(err);
+                      }
+        });    
+        return false;
+    });
+  </script>

@@ -20,14 +20,14 @@
          
          // Database connection
          try {
-            $connection_string = 'mysql:host=10.1.0.15;port=13306;dbname=gti510;charset=utf8';
+            $connection_string = 'mysql:host=gti510.techfred.ca;port=13306;dbname=gti510;charset=utf8';
             $connection_array = array(
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             );
             
             $this->db = new PDO($connection_string, USER, PASSWORD, $connection_array);
-            echo 'Database connection established <br />';
+            //echo 'Database connection established <br />';
          }
          catch(PDOException $e) {
             $this->db = null;

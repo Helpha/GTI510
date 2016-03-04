@@ -11,10 +11,11 @@
           </button>
           <!-- LOGO -->              
           <!-- TEXT BASED LOGO -->
-          <a class="navbar-brand" href="index.html">BookÉTSt</a>              
+          <a class="navbar-brand" href="index.php">BookÉTS</a>              
           <!-- IMG BASED LOGO  -->
-         <!-- <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" alt="logo"></a> -->                    
+         <!-- <a class="navbar-brand" href="indes.php"><img src="assets/images/logo.png" alt="logo"></a> -->                    
         </div>
+		<?php if(isset($_SESSION['user'])){ ?>
         <div id="navbar" class="navbar-collapse collapse">
           <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
             <li><a href="index.php">Accueil</a></li>
@@ -34,6 +35,14 @@
             <li><a href="contact.html">Contact</a></li>
           </ul>                     
         </div><!--/.nav-collapse -->
+		<?php } else { ?>
+		
+		<div id="navbar" class="navbar-collapse collapse">
+          <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
+            <li class="active"><a href="index.html">Accueil</a></li>
+          </ul>                     
+        </div><!--/.nav-collapse -->
+		<?php } ?>
         <a href="#" id="search-icon">
           <i class="fa fa-search">            
           </i>

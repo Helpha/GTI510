@@ -6,17 +6,32 @@ if(!isset($_SESSION['user']))
 	header("Location: index.php");
 include("db/UserDB.php");
 
+$errorMessage = '';
+$successMessage = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$db = new UserDB();
 	$email = isset($_POST['email']) ? $_POST['email'] : $_SESSION['user']['email'];
+	if($db->UserOwnEmail($email)){
+		if($errorMessage != '')$errorMessage += "<br />";
+		$errorMessage += "Un utilisateur utilise déjà ce email.";
+	}
 	$name = isset($_POST['name']) ? $_POST['name'] : $_SESSION['user']['name'];
-	$password = NULL;
-	if(isset($_POST['password']) && $_POST['password'] == $_POST['confirmpassword']){
-		$password = md5($_POST['password']);
-	}else{
-		$password = $_SESSION["password"];
+	if(trim($name) == ''){
+		if($errorMessage != '')$errorMessage += "<br />";
+		$errorMessage += "Il faut un nom valide";
+	}
+	if(isset($_POST['password']) && isset($_POST['confirmPassword']) && $_POST['password'] == $_POST['confirmPassword']){
+		$db->ChangePassword($_SESSION['user']['id'], $_POST['password']);
 	}	
-	$db->UpdateUser($_SESSION['user']['id'],$email,$_SESSION['user']['role'],$name, $password, $_SESSION['user']['isEnable'], true);
+	else if(isset($_POST['password']) && isset($_POST['confirmPassword']) && $_POST['password'] != $_POST['confirmPassword']){
+		if($errorMessage != '')$errorMessage += "<br />";
+		$errorMessage += 'Le mot de passe et sa confirmation ne sont pas identique.';
+	}
+	if($errorMessage != ''){
+		$db->UpdateUser($_SESSION['user']['id'],$email,$_SESSION['user']['role'],$name, $_SESSION['user']['isEnable']);
+		$successMessage += "Modification sauvegardé.";
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -108,6 +123,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="overlay">
       <div class="container">
         <div class="row">
+		<?php if($successMessage != ''){ ?>
+			<span class="label label-success"><?php echo $successMessage; ?></span>
+		<?php } if($errorMessage != ''){?>
+			<span class="label label-danger"><?php echo $errorMessage; ?></span>
+		<?php } ?>
 	<div id="formContainer" class="center-block">
 		<div id="userDetailInfo">
 		<?php 
@@ -116,9 +136,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		?>
 			<dl>
 			  <dt><label for="email">E-mail</label></dt>
-			  <dd><?php $_SESSION['user']['email']?></dd>
+			  <dd><?php echo $_SESSION['user']['email']?></dd>
 			  <dt><label for="name">Name</label></dt>
-			  <dd><?php $_SESSION['user']['name']?></dd>
+			  <dd><?php echo $_SESSION['user']['name']?></dd>
 			</dl>
 			<hr/>
 			<a href="#" class="btn btn-primary btn-lg active center-block" role="button" onclick="$('#userDetailForm').show();$('#userDetailInfo').hide();">Faire des modifications</a>
@@ -126,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			}
 		?>
 		</div>
-		<form id="userDetailForm">
+		<form id="userDetailForm" method="POST">
 			<div class="form-group">
 				<label for="email">E-mail</label>
 				<div class="input-group">

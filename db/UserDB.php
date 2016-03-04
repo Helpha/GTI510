@@ -6,22 +6,24 @@ class UserDB{
 	private $dbHandler;
 	
 	function __construct($db = NULL){
-		if($db)
-			$dbHandler = $db;
+		if(isset($db))
+			$this->dbHandler = $db;
 		else
-			$db = new DBHandler();
+			$this->dbHandler = new DBHandler();
 		
 		
 	}
 	
-	public function Register($email, $name, $password, $role = NULL, $isEnable = true, $isSecured = false){
-		$stmt = $this->dbHandler->getInstance()->prepare("INSERT INTO USERS (email, role, name, password, isenable) VALUES (:email, :role, :name, :password, :isenable)");
+	public function Register($email, $name, $password, $role = "none", $isEnable = true, $isSecured = false){
+		$stmt = $this->dbHandler->getInstance()->prepare("INSERT INTO USERS (email, role, name, password, isEnabled) VALUES (:email, :role, :name, :password, :isEnabled)");
 		$stmt->bindParam(':email', $email);
 		$stmt->bindParam(':role', $role);
-		$stmt->bindParam(':value', $value);
 		$stmt->bindParam(':name', $name);
-		$stmt->bindParam(':password', $isSecured ? $password : md5($password));
-		$stmt->bindParam(':isenable', $isEnable);
+		if($isSecured == false)
+			$password = md5($password);
+		$stmt->bindParam(':password', $password);
+		$enabled = $isEnable ? 1 : 0;
+		$stmt->bindParam(':isEnabled', $enabled);
 
 		$stmt->execute();
 	}
@@ -29,8 +31,19 @@ class UserDB{
 	public function GetUser($userId){
 		$stmt = $this->dbHandler->getInstance()->prepare("SELECT * FROM users where id = ?");
 		$stmt->execute(array($userId));
-		$result = $stmt->fetchAll();
+		$result = $stmt->fetch();
 		return $result;
+	}
+	
+	public function UserOwnEmail($email){
+		if(isset($email) && trim($email) != ''){
+			$stmt = $this->dbHandler->getInstance()->prepare("SELECT * FROM users where email = ?");
+			$stmt->execute(array($email));
+			$result = $stmt->fetchAll();
+			return isset($result) && isset($result[0]);
+		
+		}
+		return false;
 	}
 	
 	public function GetAllUsers(){
@@ -43,21 +56,21 @@ class UserDB{
 	public function Activate($userId, $isEnabled){
 		$stmt = $this->dbHandler->getInstance()->prepare(
 		"UPDATE users 
-		SET isenable = :isenable 
+		SET isEnabled = :isEnabled 
 		WHERE id = :id"
 		);
-		$stmt->bindParam(':isenable', $isEnable);
+		$stmt->bindParam(':isEnabled', $isEnable);
 		$stmt->bindParam(':id', $userId);
 		$stmt->execute();
 	}
 	
 	public function SignIn($email, $password){
-		$stmt = $this->dbHandler->getInstance()->prepare("SELECT user FROM users where email = ? AND password = ?");
+		$stmt = $this->dbHandler->getInstance()->prepare("SELECT * FROM users where email = ? AND password = ?");
 		$stmt->execute(array($email, md5($password)));
-		$result = $stmt->fetchAll();
+		$result = $stmt->fetch();
 		
-		if($result != NULL && $result[0] != NULL){
-			$_SESSION['user'] = $result[0];
+		if($result != NULL){
+			$_SESSION['user'] = $result;
 		}else{
 			$this->SignOut();
 		}
@@ -65,22 +78,37 @@ class UserDB{
 	
 	public function SignOut(){
 		$_SESSION['user'] = NULL;
+		unset($_SESSION['user']);
 		header("Location: index.php");
 	}
 	
-	public function UpdateUser($userId, $email, $name, $password, $role, $isEnable = true, $isSecured = false){
+	public function UpdateUser($userId, $email, $name, $role, $isEnable = true){
 		$stmt = $this->dbHandler->getInstance()->prepare(
 		"UPDATE users 
-		SET email = :email, name = :name, password = :password, role = :role, isenable = :isenable 
+		SET email = :email, name = :name, role = :role, isenable = :isenable 
 		WHERE id = :id"
 		);
 		$stmt->bindParam(':email', $email);
 		$stmt->bindParam(':role', $role);
 		$stmt->bindParam(':value', $value);
 		$stmt->bindParam(':name', $name);
-		$stmt->bindParam(':password', $isSecured ? $password : md5($password));
 		$stmt->bindParam(':isenable', $isEnable);
 		$stmt->bindParam(':id', $userId);
+		$stmt->execute();
+		
+		if($_SESSION['user']['id'] == $userId)
+			$_SESSION['user'] = $this->GetUser($userId);
+	}
+	
+	public function ChangePassword($userId, $password){
+		$stmt = $this->dbHandler->getInstance()->prepare(
+		"UPDATE users 
+		SET password = :password 
+		WHERE id = :id"
+		);
+		$stmt->bindParam(':password', md5($password));
+		$stmt->bindParam(':id', $userId);
+		$stmt->execute();
 	}
 }
 ?>
