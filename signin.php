@@ -18,7 +18,6 @@
 		?>
 			{"status":"danger", "message":"Il y a aucun compte avec ce email et ce mot de passe."}
 		<?php
-		}
-		
+		}	
 	}
 ?>

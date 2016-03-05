@@ -19,8 +19,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
             <li><a href="index.php">Accueil</a></li>
-            <li><a href="userDetail.php">Profil</a></li>
-            <li class="active"><a href="service.html">Service</a></li>
+            <li class="active"><a href="viewAllBooks.php">Livres</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <span class="fa fa-angle-down"></span></a>
@@ -31,8 +30,11 @@
                 <li><a href="blog-single-with-out-sidebar.html">Blog Single with out Sidebar</a></li>           
               </ul>
             </li>
-            <li><a href="404.html">404 Page</a></li>               
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="404.html">404 Page</a></li> 
+			<?php if($_SESSION['user']['role'] == "admin" ){?>
+				<li><a href="settings.php">Page d'administration</a></li>
+			
+			<?php } ?>
           </ul>                     
         </div><!--/.nav-collapse -->
 		<?php } else { ?>

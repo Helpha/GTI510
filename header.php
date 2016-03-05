@@ -37,11 +37,13 @@
           <div class="col-md-6 col-sm-6 col-xs-6">
             <div class="header-login">
 			<?php if(isset($_SESSION['user']) && isset($_SESSION['user']['name'])){ ?>
-				<a class="login modal-form hidden" id="loginLink" data-target="#login-form" data-toggle="modal" href="#">Connexion / S'enregistrer</a>
-				<a class="login modal-form" id="logoutLink" href="signout.php">Se déconnecter</a>
+				<div class="">
+					<a class="login modal-form" href="userDetail.php"><?php echo $_SESSION['user']['name']; ?></a>
+					<a class="login modal-form" href="signout.php">Se déconnecter</a>
+				  </ul>
+				</div>
 			<?php } else { ?>			  
 				<a class="login modal-form" id="loginLink" data-target="#login-form" data-toggle="modal" href="#">Connexion / S'enregistrer</a>
-				<a class="login modal-form hidden" id="logoutLink" href="signout.php">Se déconnecter</a>
 			<?php } ?>
             </div>
           </div>
@@ -85,7 +87,7 @@
       <div id="signup-content" class="modal-content">
         <div class="modal-header">
           <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title"><i class="fa fa-lock"></i>S'enregistrer</h4>
+          <h4 class="modal-title"><i class="fa fa-lock"></i>Enregistrer</h4>
         </div>
         <div class="modal-body">
           <form id="signupForm" action="signup.php" method="POST">
@@ -112,7 +114,7 @@
             </div>
             <div class="loginbox">
               <!--<label><input type="checkbox"><span>Remember me</span><i class="fa"></i></label>-->
-              <button class="btn signin-btn" type="submit">S'enregistrer</button>
+              <button class="btn signin-btn" type="submit">Enregistrer</button>
             </div>
           </form>
         </div>
@@ -131,8 +133,9 @@
             data    : $(this).serialize(),
             success : function( data ) {
 						var jsonResult = JSON.parse(data);
-						$('#signinForm .status').removeClass('label-success').removeClass('label-danger').addClass('label-'+jsonResult["status"]).html(jsonResult["message"]);						
-						setTimeout(function(){location.reload();},500);
+						$('#signinForm .status').removeClass('label-success').removeClass('label-danger').addClass('label-'+jsonResult["status"]).html("<span>"+jsonResult["message"]+"</span>");						
+						if(jsonResult["status"] == "success")
+							setTimeout(function(){location.reload();},500);
 					  },
             error   : function( xhr, err ) {
 							$('#signinForm .status').html(xhr);
@@ -148,8 +151,9 @@
             data    : $(this).serialize(),
             success : function( data ) {
                         var jsonResult = JSON.parse(data);
-						$('#signupForm .status').removeClass('label-success').removeClass('label-danger').addClass('label-'+jsonResult["status"]).html(jsonResult["message"]);
-						setTimeout(function(){location.reload();},500);
+						$('#signupForm .status').removeClass('label-success').removeClass('label-danger').addClass('label-'+jsonResult["status"]).html("<span>"+jsonResult["message"]+"</span>");
+						if(jsonResult["status"] == "success")
+							setTimeout(function(){location.reload();},500);
 					  },
             error   : function( xhr, err ) {
                         $('#signupForm .status').html(xhr);

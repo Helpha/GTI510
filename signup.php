@@ -11,24 +11,31 @@
 		$confirmPwd = $_POST["confirmPwd"];
 		
 		$errorMessage = '';
-		If(trim($email) == '' && trim($password) == '' && trim($confirmPwd) == ''&& $name == ''){
-			$errorMessage += "Aucun champ ne peut être vide, ";
+		If(trim($email) == '' || trim($password) == '' || trim($confirmPwd) == ''|| $name == '' ||
+		$email == NULL || $password == NULL || $name == NULL || $confirmPwd == NULL){
+			if($errorMessage != '')$errorMessage = $errorMessage."<br />";
+			$errorMessage = $errorMessage."Aucun champ ne peut être vide";
 		}
-		if($userDB->UserOwnEmail($email))
-			$errorMessage += "Email déjà associé à un compte, ";
+		if($userDB->UserOwnEmail($email)){
+			if($errorMessage != '')$errorMessage = $errorMessage."<br />";
+			$errorMessage = $errorMessage."Email déjà associé à un compte, ";
+		}
 		if($password != $confirmPwd){
-			$errorMessage += "Le mot de passe de concorde pas avec la confirmation, ";
+			if($errorMessage != '')$errorMessage = $errorMessage."<br />";
+			$errorMessage = $errorMessage."Le mot de passe de concorde pas avec la confirmation, ";
+		}
+		if($errorMessage == ''){
+			$userDB->Register($email, $name, $password);
+			$userDB->SignIn($email, $password);
 		}
 		
-		$userDB->Register($email, $name, $password);
-		
-		if(isset($_SESSION['user']) && isset($_SESSION['user']['email']) && $_SESSION['user']['email'] == $email){
+		if($errorMessage == '' && isset($_SESSION['user']) && isset($_SESSION['user']['email']) && $_SESSION['user']['email'] == $email){
 		?>
 			{"status":"success", "message":"Compte créé"}
 		<?php
 		}else{
 		?>
-			{"status":"danger", "message":"Il y a aucun compte avec ce email et ce mot de passe."}
+			{"status":"danger", "message":"<?php echo $errorMessage; ?>"}
 		<?php
 		}
 		

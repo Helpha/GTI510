@@ -12,31 +12,38 @@ $successMessage = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$db = new UserDB();
 	$email = isset($_POST['email']) ? $_POST['email'] : $_SESSION['user']['email'];
-	if($db->UserOwnEmail($email)){
-		if($errorMessage != '')$errorMessage += "<br />";
-		$errorMessage += "Un utilisateur utilise déjà ce email.";
+	if($email != $_SESSION['user']['email'] && $db->UserOwnEmail($email)){
+		if($errorMessage != '')$errorMessage = $errorMessage."<br />";
+		$errorMessage = $errorMessage. "Un utilisateur utilise déjà ce email.";
 	}
-	$name = isset($_POST['name']) ? $_POST['name'] : $_SESSION['user']['name'];
+	$name = isset($_POST['username']) ? $_POST['username'] : $_SESSION['user']['name'];
+	if(trim($email) == ''){
+		if($errorMessage != '')$errorMessage = $errorMessage."<br />";
+		$errorMessage = $errorMessage. "Il faut un email valide";
+	}
 	if(trim($name) == ''){
-		if($errorMessage != '')$errorMessage += "<br />";
-		$errorMessage += "Il faut un nom valide";
+		if($errorMessage != '')$errorMessage = $errorMessage."<br />";
+		$errorMessage = $errorMessage. "Il faut un nom valide";
 	}
-	if(isset($_POST['password']) && isset($_POST['confirmPassword']) && $_POST['password'] == $_POST['confirmPassword']){
-		$db->ChangePassword($_SESSION['user']['id'], $_POST['password']);
+	$pwd = $_POST['password'];
+	$cPwd = $_POST['confirmPassword'];
+	if($pwd != NULL && $pwd != '' && $cPwd != NULL && $cPwd != '' && $pwd == $cPwd){
+		$db->ChangePassword($_SESSION['user']['id'], $pwd);
 	}	
-	else if(isset($_POST['password']) && isset($_POST['confirmPassword']) && $_POST['password'] != $_POST['confirmPassword']){
-		if($errorMessage != '')$errorMessage += "<br />";
-		$errorMessage += 'Le mot de passe et sa confirmation ne sont pas identique.';
+	else if($pwd != '' || $cPwd){
+		if($errorMessage != '')$errorMessage = $errorMessage."<br />";
+		$errorMessage = $errorMessage.'Le mot de passe et sa confirmation ne sont pas identique.';
 	}
-	if($errorMessage != ''){
-		$db->UpdateUser($_SESSION['user']['id'],$email,$_SESSION['user']['role'],$name, $_SESSION['user']['isEnable']);
-		$successMessage += "Modification sauvegardé.";
+	if($errorMessage == ''){
+		$db->UpdateUser($_SESSION['user']['id'],$email,$name, $_SESSION['user']['role'], $_SESSION['user']['isEnabled']);
+		$successMessage = $successMessage."Modification sauvegardé.";
 	}
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -124,9 +131,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="container">
         <div class="row">
 		<?php if($successMessage != ''){ ?>
-			<span class="label label-success"><?php echo $successMessage; ?></span>
+			<span class="label label-success"><span><?php echo $successMessage; ?></span></span>
 		<?php } if($errorMessage != ''){?>
-			<span class="label label-danger"><?php echo $errorMessage; ?></span>
+			<span class="label label-danger"><span><?php echo $errorMessage; ?></span></span>
 		<?php } ?>
 	<div id="formContainer" class="center-block">
 		<div id="userDetailInfo">
@@ -151,14 +158,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				<label for="email">E-mail</label>
 				<div class="input-group">
 					<span class="input-group-addon">@</span>
-					<input type="email" class="form-control" id="email" name="email" placeholder="Email"/>
+					<input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['user']['email']; ?>"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="email">Nom</label>
 				<div class="input-group">
 					<span class="input-group-addon">abc</span>
-					<input type="text" class="form-control" id="name" name="name" placeholder="Nom"/>
+					<input type="text" class="form-control" id="name" name="username" value="<?php echo $_SESSION['user']['name']; ?>"/>
 				</div>
 			</div>
 			<div class="form-group">

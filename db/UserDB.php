@@ -80,8 +80,6 @@ class UserDB{
 		
 		if($result != NULL){
 			$_SESSION['user'] = $result;
-		}else{
-			$this->SignOut();
 		}
 	}
 	
@@ -94,12 +92,11 @@ class UserDB{
 	public function UpdateUser($userId, $email, $name, $role, $isEnable = true){
 		$stmt = $this->dbHandler->getInstance()->prepare(
 		"UPDATE users 
-		SET email = :email, name = :name, role = :role, isenable = :isenable 
+		SET email = :email, name = :name, role = :role, isEnabled = :isenable 
 		WHERE id = :id"
 		);
 		$stmt->bindParam(':email', $email);
 		$stmt->bindParam(':role', $role);
-		$stmt->bindParam(':value', $value);
 		$stmt->bindParam(':name', $name);
 		$stmt->bindParam(':isenable', $isEnable);
 		$stmt->bindParam(':id', $userId);
