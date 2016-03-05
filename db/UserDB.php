@@ -53,7 +53,7 @@ class UserDB{
 		return $result;
 	}
 	
-		public function GetAllBooks(){
+	public function GetAllBooks(){
 		$stmt = $this->dbHandler->getInstance()->prepare("SELECT * FROM livres ORDER BY title");
 		$stmt->execute();
 		$result = $stmt->fetchAll();

@@ -1,5 +1,13 @@
 <?php 
 session_start();
+include_once('connect.php');
+include_once('db/UserDB.php');
+include_once('db/GenericDB.php');
+
+$db = new DBHandler();
+$userDB = new UserDB($db);
+$genericDB = new GenericDB($db);
+$genericDB->GetSettings();
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +101,7 @@ session_start();
               <div class="col-md-6 col-sm-6">
                 <div class="slide-article">
                   <h1 class="wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.5s">Message important : </h1>
-                  <p class="wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.75s">"MESSAGE DE LA DATABASE"</p>
+                  <p class="wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.75s"><?php echo $_SESSION['settings']['SystemMessage']; ?></p>
                 </div>
               </div>
             </div>

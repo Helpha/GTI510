@@ -125,10 +125,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	#userDetailInfo .btn-primary{
 		width:300px;
 	}
+	
+	.overlay{
+		padding:20px;
+	}
+	</style>
   </style>
   <section id="single-page-header">
-    <div class="overlay">
-      <div class="container">
+    <div class="page-header overlay">
+		<div class="container">
+			<h2>Profil de <?php echo $_SESSION['user']['name']; ?> </h2>
+		</div>
+    </div>
+  </section>
+  
+ <div class="container">
         <div class="row">
 		<?php if($successMessage != ''){ ?>
 			<span class="label label-success"><span><?php echo $successMessage; ?></span></span>
@@ -203,8 +214,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 </div>
       </div>
-    </div>
-  </section>
 <!-- Start footer -->
   <footer id="footer">
     <div class="container">

@@ -1,21 +1,21 @@
 <?php
-	/*include_once('connect.php');
-	include_once('db/UserDB.php');
-	/*if(!isset($_SESSION['user']))
-		header("Location: index.php");*/
-	/*$db = new DBHandler();
-	$userDB = new UserDB($db);
+	session_start();
+	if(!isset($_SESSION['user']) || $_SESSION['user']['role'] != "admin"){
+		/*header("Location: index.php");*/
+	}
 	
-	$users = $userDB->GetAllUsers();*/
-	$users = array();
-	array_push($users,array(
-	"id" => 0,
-    "email" => "exemple@gmail.com",
-    "name" => "exemple",
-	"isEnabled" => 0
-	));
+	include_once('connect.php');
+	include_once('db/UserDB.php');
+	include_once('db/GenericDB.php');
+
+	$db = new DBHandler();
+	$userDB = new UserDB($db);
+	$genericDB = new GenericDB($db);
+	$genericDB->GetSettings();
+	$users = $userDB->GetAllUsers();
 ?>
 <!DOCTYPE>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -55,7 +55,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-	<style>
+	  <style>
 		.btn-success > span::before{
 			content:"Activé";
 		}
@@ -64,16 +64,16 @@
 			content:"Désactivé";
 		}
 		
-		#usersAdminView{
-			width:100%;
-			color:white;
-		}
-		
 		#usersAdminView .btn{
 			min-width: 100px;
 			margin-top: 10px;
 		}
+		.overlay{
+			padding:20px;
+		}
 	</style>
+	  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
   </head>
   <body> 
 
@@ -98,12 +98,19 @@
   
   <!-- Start single page header -->
   <section id="single-page-header">
-    <div class="overlay">
-      <div class="container">
-        <div>
+    <div class="page-header overlay">
+		<div class="container">
+			<h2>Page d'administration </h2>
+		</div>
+    </div>
+  </section>
+  <!-- End single page header -->
+  
+  <!-- Start Service -->
+  <div class="container">
           <div class="col-md-8 col-sm-8 col-xs-12">
-            <div class="single-page-header-left">
-				<table id="usersAdminView">
+            <div>
+				<table id="usersAdminView" class="table">
 					<thead>
 						<tr>
 							<th>Nom</th>
@@ -136,28 +143,24 @@
           </div>
           <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="single-page-header-right">
-              <form>
+              <form METHOD="POST">
 				<div class="form-group">
 					<label for="email">Nombre maximum de réservations par utilisateur</label>
-					<div class="input-group">
-						<input type="number" min="0" class="form-control" id="maxReservationCount" name="maxReservationCount" placeholder=""/>
-					</div>
-					<label for="email">Message du jour</label>
-					<div class="input-group">
-						<textarea type="number" min="0" class="form-control" id="generalMessage" name="generalMessage" placeholder=""></textarea>
+					<div>
+						<input type="number" id="maxRCount" min=<?php echo $_SESSION['settings']['minMaxReservationCount']; ?> max=<?php echo $_SESSION['settings']['maxMaxReservationCount']; ?> class="form-control" id="maxReservationCount" name="maxReservationCount" value="<?php echo $_SESSION['settings']['MaxReservationCount'];?>"/>
 					</div>
 				</div>
+				<div class="form-group">
+					<label for="email">Message du jour</label>
+					<div>
+						<textarea type="text" min="0" class="form-control" id="generalMessage" name="generalMessage"><?php echo $_SESSION['settings']['SystemMessage']; ?></textarea>
+					</div>
+				</div>
+				<button type="submit">Enregistrer</button>
 			</form>
             </div>
           </div>
-		</div>
-      </div>
-    </div>
-  </section>
-  <!-- End single page header -->
-  
-  <!-- Start Service -->
-  
+		 </div>
 
   <!-- Start footer -->
   <footer id="footer">
@@ -181,9 +184,7 @@
     </div>
   </footer>
   <!-- End footer -->
-
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>    
+   
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <!-- Bootstrap -->
   <script src="assets/js/bootstrap.js"></script>
@@ -204,7 +205,8 @@
  
   <!-- Custom js -->
   <script type="text/javascript" src="assets/js/custom.js"></script>
-  <script type="text/javascript">
+    <script type="text/javascript">
+  <!-- End single page header -->
 	function isEnable(id, action, obj){
 		$.ajax({
         url:'userActivation.php',
@@ -220,7 +222,22 @@
         }
     });
 	}
+	
+	$( "#maxRCount" ).change(function() {
+      var max = parseInt($(this).attr('max'));
+      var min = parseInt($(this).attr('min'));
+      if ($(this).val() > max)
+      {
+          $(this).val(max);
+      }
+      else if ($(this).val() < min)
+      {
+          $(this).val(min);
+      }       
+    }); 
   </script>
+  </body>
+</html>
     
   </body>
 </html>
