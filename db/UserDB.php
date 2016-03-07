@@ -53,22 +53,13 @@ class UserDB{
 		return $result;
 	}
 	
-	public function GetAllBooks(){
-		$stmt = $this->dbHandler->getInstance()->prepare("SELECT * FROM livres ORDER BY title");
-		$stmt->execute();
-		$result = $stmt->fetchAll();
-		return $result;
-	}
-	
-	
-	
 	public function Activate($userId, $isEnabled){
 		$stmt = $this->dbHandler->getInstance()->prepare(
 		"UPDATE users 
 		SET isEnabled = :isEnabled 
 		WHERE id = :id"
 		);
-		$stmt->bindParam(':isEnabled', $isEnable);
+		$stmt->bindParam(':isEnabled', $isEnabled);
 		$stmt->bindParam(':id', $userId);
 		$stmt->execute();
 	}

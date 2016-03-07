@@ -1,16 +1,23 @@
 <?php
 	session_start();
 	if(!isset($_SESSION['user']) || $_SESSION['user']['role'] != "admin"){
-		/*header("Location: index.php");*/
+		header("Location: index.php");
 	}
 	
 	include_once('connect.php');
 	include_once('db/UserDB.php');
 	include_once('db/GenericDB.php');
-
+	
 	$db = new DBHandler();
 	$userDB = new UserDB($db);
 	$genericDB = new GenericDB($db);
+	
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		$_SESSION['settings']['SystemMessage'] = $_POST['generalMessage'];
+		$_SESSION['settings']['MaxReservationCount'] = $_POST['maxRCount'];
+		$genericDB->PersistSettings();
+	}
+
 	$genericDB->GetSettings();
 	$users = $userDB->GetAllUsers();
 ?>
@@ -124,14 +131,14 @@
 							for($i = 0; $i < count($users); $i++)
 							{
 								$userId = $users[$i]['id']; 
-								$isEnable = $users[$i]['isEnabled'];
+								$isEnable = $users[$i]['isEnabled'] == 1;
 						?>
 								<tr>
 									<td><?php echo $users[$i]['name']; ?></td>
 									<td><?php echo $users[$i]['email']; ?></td>
 									<td></td>
 									<td id="user_row_<?php echo $userId ?>">
-										<button type="submit" name="action" value="disable" class="btn <?php echo ($isEnable == 1 ? 'btn-success' : 'btn-danger') ?>" onclick="isEnable(<?php echo $userId . ',' . ($isEnable ? 1 : 0); ?>, this);"><span></span></button>
+										<button name="action" value="disable" class="btn <?php echo ($isEnable == 1 ? 'btn-success' : 'btn-danger') ?>" data-value="<?php echo ($isEnable ? 0 : 1); ?>" onclick="isEnable(<?php echo $userId ?>, this);"><span></span></button>
 									</td>
 								</tr>
 						<?php
@@ -147,7 +154,7 @@
 				<div class="form-group">
 					<label for="email">Nombre maximum de réservations par utilisateur</label>
 					<div>
-						<input type="number" id="maxRCount" min=<?php echo $_SESSION['settings']['minMaxReservationCount']; ?> max=<?php echo $_SESSION['settings']['maxMaxReservationCount']; ?> class="form-control" id="maxReservationCount" name="maxReservationCount" value="<?php echo $_SESSION['settings']['MaxReservationCount'];?>"/>
+						<input type="number" id="maxRCount" min=<?php echo $_SESSION['settings']['minMaxReservationCount']; ?> max=<?php echo $_SESSION['settings']['maxMaxReservationCount']; ?> class="form-control" name="maxRCount" value="<?php echo $_SESSION['settings']['MaxReservationCount'];?>"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -207,17 +214,19 @@
   <script type="text/javascript" src="assets/js/custom.js"></script>
     <script type="text/javascript">
   <!-- End single page header -->
-	function isEnable(id, action, obj){
+	function isEnable(id, obj){
 		$.ajax({
         url:'userActivation.php',
         type:'post',
-        data:{id : id, action : action},
-        success:function(){
+        data:{user : id, action : $(obj).attr("data-value")},
+        success:function(data){
             if($(obj).hasClass('btn-success')){
 				$(obj).removeClass('btn-success').addClass('btn-danger');
+				$(obj).attr("data-value","1");
 			}
 			else{
 				$(obj).removeClass('btn-danger').addClass('btn-success');
+				$(obj).attr("data-value","0");
 			}
         }
     });

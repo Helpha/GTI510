@@ -1,8 +1,9 @@
 <?php
 	session_start();
 
-		include_once("db/UserDB.php");
-		
+	include_once("db/BookDB.php");
+	
+	$bookDB = new BookDB();
 
 ?>
 
@@ -108,21 +109,27 @@
         <div class="col-md-12">
           <div class="service-content">
               <!-- Start single service -->
+			  <?php
+				$books = $bookDB->GetAllBooks();
+				for($i = 0; $i < count($books); $i++)
+				{
+					$book = $books[$i];
+			  ?>
               <div class="col-md-12">
                 <div class="single-service wow zoomIn">
-                  <img src="assets/images/books/pride_and_prejudice.jpg" height="250px" width="150px" style="float: left"/>
+                  <img src="<?php echo $book['Image_url'] ?>" height="250px" width="150px" style="float: left"/>
                  
                   <div style="float: left">
                  <div style="float: right"><a href="viewAllBooks.php?action=res&id=82821">Réserver</a> &nbsp;<a href="viewAllBooks.php?action=edit&id=82821">Modifier</a> &nbsp; <a href="viewAllBooks.php?action=del&id=82821">Supprimer</a></div>
-                  <h4 class="service-title"/>Pride & prejudice</h4>
-                  <p>Écrit par : Jane Austen</p>
-                  <p>ISBN : ASKIDKLJASKJLD</p>
-                  <p>Date d'édition : 28/01/1813</p>
-                  <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
+                  <h4 class="service-title"/><?php echo $book['title'] ?></h4>
+                  <p>Écrit par : <?php echo $book['author'] ?></p>
+                  <p>ISBN : <?php echo $book['isbn'] ?></p>
+                  <p>Date d'édition : <?php echo $book['date_publish'] ?></p>
+                  <p><?php echo $book['description'] ?></p>
                   </div>
                 </div>
               </div>
-           
+			  <?php } ?>
               <!-- End single service -->
               <div class="col-md-12">
                 <div class="single-service wow zoomIn">
@@ -138,7 +145,7 @@
                   </div>
                 </div>
               </div>
-  </div>
+		</div>
     </div>
     </div>
     </div>

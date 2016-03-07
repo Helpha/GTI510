@@ -20,12 +20,12 @@
          
          // Database connection
          try {
-            $connection_string = 'mysql:host=gti510.techfred.ca;port=13306;dbname=gti510;charset=utf8';
+            $connection_string = 'mysql:host=gti510.techfred.ca;port=13306;dbname=gti510';
             $connection_array = array(
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+			PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
             );
-            
             $this->db = new PDO($connection_string, USER, PASSWORD, $connection_array);
             //echo 'Database connection established <br />';
          }

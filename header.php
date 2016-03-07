@@ -39,7 +39,7 @@
 			<?php if(isset($_SESSION['user']) && isset($_SESSION['user']['name'])){ ?>
 				<div class="">
 					<a class="login modal-form" href="userDetail.php"><?php echo $_SESSION['user']['name']; ?></a>
-					<a class="login modal-form" href="signout.php">Se déconnecter</a>
+					<a class="login modal-form" href="signout.php">Se d&eacute;connecter</a>
 				  </ul>
 				</div>
 			<?php } else { ?>			  
