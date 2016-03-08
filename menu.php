@@ -45,10 +45,6 @@
           </ul>                     
         </div><!--/.nav-collapse -->
 		<?php } ?>
-        <a href="#" id="search-icon">
-          <i class="fa fa-search">            
-          </i>
-        </a>
       </div>     
     </nav>
       </section>

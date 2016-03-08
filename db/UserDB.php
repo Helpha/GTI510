@@ -80,7 +80,7 @@ class UserDB{
 		header("Location: index.php");
 	}
 	
-	public function UpdateUser($userId, $email, $name, $role, $isEnable = true){
+	public function UpdateUser($userId, $email, $name, $role, $isEnable = 1){
 		$stmt = $this->dbHandler->getInstance()->prepare(
 		"UPDATE users 
 		SET email = :email, name = :name, role = :role, isEnabled = :isenable 

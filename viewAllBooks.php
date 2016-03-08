@@ -4,7 +4,12 @@
 	include_once("db/BookDB.php");
 	
 	$bookDB = new BookDB();
-
+	$books = Array();
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		$books = $bookDB->GetAllBooks($_POST['searchType'], $_POST['searchType'], $_POST['search']);
+	} else {
+		$books = $bookDB->GetAllBooks('title');
+	}
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +52,23 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<style>
+		.overlay{
+			padding:20px;
+		}
+		
+		#addBook{
+			max-width:250px;
+		}
+		
+		#searchForm{
+			max-width:500px;
+		}
+		
+		#booksHeader{
+			margin-top:260px;
+		}
+	</style>
   </head>
   <body> 
 
@@ -94,23 +116,36 @@
   </section>
   <!-- End single page header -->
   
-  < <div class="container">
-     
-        <form action="">
-          <div id="search">
-          <input type="text" style="color: black;" placeholder="Rechercher par auteur, titre ou ISBN" name="s" id="m_search" style="display: inline-block;">
-          <button type="submit">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-        </form>
-
+  <div id="viewMainBooks" class="container">
+	<div id="booksHeader">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<form id="searchForm" class="form-inline" METHOD="POST">
+				<div class="form-group">
+				  <select class="form-control" id="searchType" name="searchType">
+					<option value="title">Titre</option>
+					<option value="author">Auteur</option>
+					<option value="isbn">ISBN</option>
+				  </select>
+				</div>
+				<div class="form-group" id="search">
+					<input type="text" style="color: black;" placeholder="Rechercher par auteur, titre ou ISBN" name="search" id="m_search" style="display: inline-block;">
+				</div>
+			  <button type="submit" class="btn btn-default">
+				<i class="fa fa-search"></i>
+			  </button>
+			</form>
+		</div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<?php if($_SESSION['user']['role'] == "admin") { ?>
+				<a href="bookDetail.php" id="addBook" class="btn btn-primary btn-lg active center-block" > Ajouter un nouveau livre</a>
+			<?php } ?>
+		</div>
+	</div>
       <div class="row">
         <div class="col-md-12">
           <div class="service-content">
               <!-- Start single service -->
 			  <?php
-				$books = $bookDB->GetAllBooks();
 				for($i = 0; $i < count($books); $i++)
 				{
 					$book = $books[$i];
@@ -121,7 +156,7 @@
                  
                   <div style="float: left">
                  <div style="float: right"><a href="viewAllBooks.php?action=res&id=82821">Réserver</a> &nbsp;<a href="viewAllBooks.php?action=edit&id=82821">Modifier</a> &nbsp; <a href="viewAllBooks.php?action=del&id=82821">Supprimer</a></div>
-                  <h4 class="service-title"/><?php echo $book['title'] ?></h4>
+                  <a href="bookDetail.php?isbn=<?php echo $book['isbn'];?>"<h4 class="service-title"/><?php echo $book['title'] ?></h4></a>
                   <p>Écrit par : <?php echo $book['author'] ?></p>
                   <p>ISBN : <?php echo $book['isbn'] ?></p>
                   <p>Date d'édition : <?php echo $book['date_publish'] ?></p>

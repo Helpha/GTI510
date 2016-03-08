@@ -13,9 +13,10 @@
 		$count = $_POST['count'];
 		$author = $_POST['author'];
 		$isbn = $_POST['isbn'];
-		
+
 		if(isset($_POST['bookId'])){
 			$bookDB->UpdateBook($_POST['bookId'], $isbn, $title, $description, $Image_Url, $author, $date_publish, $count);
+			$book = $bookDB->GetBookById($_POST['bookId']);
 		} else {
 			$bookDB->AddBook($isbn, $title, $description, $Image_Url, $author, $date_publish, $count);
 			header("Location: viewAllBooks.php");
@@ -25,7 +26,7 @@
 		if(isset($_GET['isbn'])) {
 			$result = $bookDB->GetBookByISBN($_GET['isbn']);
 			if(count($result) > 0 ){
-				$book = $result[0];
+				$book = $result;
 			}
 		}
 		
@@ -149,7 +150,7 @@
 		<div id="bookDetailInfo">
 			<div class="col-md-6 col-sm-6 col-xs-12">
 				<div class="bookImageContainer">
-					<img src="<?php echo $book['Image_Url']; ?>" />
+					<img src="<?php echo $book['Image_url']; ?>" />
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6 col-xs-12">
@@ -165,8 +166,11 @@
 				  <dt><label for="date_publish">Date de publication</label></dt>
 				  <dd><?php echo $book['date_publish']?></dd>
 				  <dt><label for="count">Nombre d'exemplaire</label></dt>
-				  <dd><?php echo $book['count']?></dd>
+				  <dd><?php echo $book['Count']?></dd>
 				</dl>
+				<?php if($_SESSION['user']['role'] == "admin") { ?>
+				<a href="#" class="btn btn-primary btn-lg active center-block" role="button" onclick="$('#bookDetailForm').show();$('#bookDetailInfo').hide();">Faire des modifications</a>
+				<?php } ?>
 			</div>
 		</div>
 		<?php } ?>
@@ -184,7 +188,7 @@
 				<label for="title">Url de l'image représentative</label>
 				<div class="input-group">
 					<span class="input-group-addon">abc</span>
-					<input type="text" class="form-control" id="imageUrl" name="imageUrl" value="<?php echo $book['Image_Url']; ?>"/>
+					<input type="text" class="form-control" id="imageUrl" name="imageUrl" value="<?php echo $book['Image_url']; ?>"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -198,7 +202,7 @@
 				<label for="description">Description sommaire</label>
 				<div class="input-group">
 					<span class="input-group-addon">abc</span>
-					<textarea type="text" class="form-control" id="description" name="description"><?php echo $book['title']; ?></textarea>
+					<textarea type="text" class="form-control" id="description" name="description"><?php echo $book['description']; ?></textarea>
 				</div>
 			</div>
 			<div class="form-group">
@@ -225,7 +229,7 @@
 	{
 ?>
 			<button type="button" class="btn btn-default pull-right" onclick="$('#bookDetailForm').hide();$('#bookDetailInfo').show();">Annuler</button>
-			<button type="submit" class="btn btn-default pull-right">Modifier</button>
+			<button type="submit" class="btn btn-default pull-right">Sauvegarder</button>
 		</form>
 		<script>
 			$('#bookDetailForm').hide();
@@ -234,7 +238,7 @@
 	}
 	else{
 ?>
-			<button type="submit" class="btn btn-default pull-right">S'enregistrer</button>
+			<button type="submit" class="btn btn-default pull-right">Sauvegarder</button>
 		</form>
 		<script>
 			$('#bookDetailInfo').hide();
