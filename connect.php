@@ -20,7 +20,7 @@
          
          // Database connection
          try {
-            $connection_string = 'mysql:host=gti510.techfred.ca;port=13306;dbname=gti510';
+            $connection_string = 'mysql:host=gti510.techfred.ca;port=13306;dbname=gti510;charset=utf8';
             $connection_array = array(
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
