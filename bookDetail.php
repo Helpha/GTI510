@@ -119,6 +119,15 @@
               <h2><?php  if($book != NULL) {?> Détail sur <i><?php echo $book['title']?></i><?php }else{ ?> Ajout d'un livre <?php } ?> </h2>
             </div>
           </div>
+		  <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="single-page-header-right">
+              <ol class="breadcrumb">
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="viewAllBooks.php">Livres</a></li>
+				<li class="active">Détail</li>
+              </ol>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -126,7 +135,7 @@
   <!-- End single page header -->
   <style>
 	.bookDetail{
-		margin-top: 230px;
+		margin-top: 260px;
 		margin-bottom: 60px;
 	}
 	.bookDetail > div > dl{
@@ -150,10 +159,13 @@
 		<div id="bookDetailInfo">
 			<div class="col-md-6 col-sm-6 col-xs-12">
 				<div class="bookImageContainer">
-					<img src="<?php echo $book['Image_url']; ?>" />
+					<img class="img-rounded img-responsive" src="<?php echo $book['Image_url']; ?>" />
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6 col-xs-12">
+				<?php if($_SESSION['user']['role'] == "admin") { ?>
+				<a href="#" class="btn btn-primary btn-lg active center-block" role="button" onclick="$('#bookDetailForm').show();$('#bookDetailInfo').hide();">Faire des modifications</a>
+				<?php } ?>
 				<dl>
 				  <dt><label for="title">Titre</label></dt>
 				  <dd><?php echo $book['title']?></dd>
@@ -168,9 +180,6 @@
 				  <dt><label for="count">Nombre d'exemplaire</label></dt>
 				  <dd><?php echo $book['Count']?></dd>
 				</dl>
-				<?php if($_SESSION['user']['role'] == "admin") { ?>
-				<a href="#" class="btn btn-primary btn-lg active center-block" role="button" onclick="$('#bookDetailForm').show();$('#bookDetailInfo').hide();">Faire des modifications</a>
-				<?php } ?>
 			</div>
 		</div>
 		<?php } ?>
@@ -307,6 +316,8 @@
           $(this).val(min);
       }       
     }); 
+	
+	$('#navbar #booksPage').addClass('active');
   </script>
     
   </body>

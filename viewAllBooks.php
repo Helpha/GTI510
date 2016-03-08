@@ -68,6 +68,12 @@
 		#booksHeader{
 			margin-top:260px;
 		}
+		
+		.image{
+			max-width:180px;
+			max-height:250px;
+			margin-right:20px;
+		}
 	</style>
   </head>
   <body> 
@@ -105,7 +111,7 @@
           <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="single-page-header-right">
               <ol class="breadcrumb">
-                <li><a href="#">Accueil</a></li>
+                <li><a href="index.php">Accueil</a></li>
                 <li class="active">Livres</li>
               </ol>
             </div>
@@ -152,7 +158,7 @@
 			  ?>
               <div class="col-md-12">
                 <div class="single-service wow zoomIn">
-                  <img src="<?php echo $book['Image_url'] ?>" height="250px" width="150px" style="float: left"/>
+                  <img class="image img-thumbnail img-responsive" src="<?php echo $book['Image_url'] ?>" style="float: left"/>
                  
                   <div style="float: left">
                  <div style="float: right"><a href="viewAllBooks.php?action=res&id=82821">Réserver</a> &nbsp;<a href="viewAllBooks.php?action=edit&id=82821">Modifier</a> &nbsp; <a href="viewAllBooks.php?action=del&id=82821">Supprimer</a></div>
@@ -166,20 +172,6 @@
               </div>
 			  <?php } ?>
               <!-- End single service -->
-              <div class="col-md-12">
-                <div class="single-service wow zoomIn">
-                  <img src="assets/images/books/pride_and_prejudice.jpg" height="250px" width="150px" style="float: left"/>
-                 
-                  <div style="float: left">
-                  	<div style="float: right"><a href="viewAllBooks.php?action=res&id=82821">Réserver</a> &nbsp;<a href="viewAllBooks.php?action=edit&id=82821">Modifier</a> &nbsp; <a href="viewAllBooks.php?action=del&id=82821">Supprimer</a></div>
-                  <h4 class="service-title"/>Pride & prejudice</h4>
-                  <p>Écrit par : Jane Austen</p>
-                  <p>ISBN : ASKIDKLJASKJLD</p>
-                  <p>Date d'édition : 28/01/1813</p>
-                  <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
-                  </div>
-                </div>
-              </div>
 		</div>
     </div>
     </div>
@@ -235,6 +227,9 @@
  
   <!-- Custom js -->
   <script type="text/javascript" src="assets/js/custom.js"></script>
+  <script>
+	$('#navbar #booksPage').addClass('active');
+  </script>
     
   </body>
 </html>

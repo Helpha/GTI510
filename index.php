@@ -157,6 +157,8 @@ $genericDB->GetSettings();
  
   <!-- Custom js -->
   <script type="text/javascript" src="assets/js/custom.js"></script>
-  
+    <script>
+	$('#navbar #homePage').addClass('active');
+  </script>
   </body>
 </html>

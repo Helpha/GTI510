@@ -1,3 +1,8 @@
+<style>
+	.login.active{
+		background-color:#2bcdc1;
+	}
+</style>
 <header id="header">
     <!-- header top search -->
     <div class="header-top">
@@ -38,7 +43,7 @@
             <div class="header-login">
 			<?php if(isset($_SESSION['user']) && isset($_SESSION['user']['name'])){ ?>
 				<div class="">
-					<a class="login modal-form" href="userDetail.php"><?php echo $_SESSION['user']['name']; ?></a>
+					<a class="login modal-form" id="userDetailPage" href="userDetail.php"><?php echo $_SESSION['user']['name']; ?></a>
 					<a class="login modal-form" href="signout.php">Se d&eacute;connecter</a>
 				  </ul>
 				</div>

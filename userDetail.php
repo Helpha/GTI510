@@ -240,6 +240,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  
   <!-- Custom js -->
   <script type="text/javascript" src="assets/js/custom.js"></script>
-    
+	<script>
+		$('#userDetailPage').addClass('active');
+	</script> 
   </body>
 </html>
