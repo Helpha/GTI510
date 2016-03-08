@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Main Style -->
     <link href="assets/css/style.css" rel="stylesheet">
+	<link href="assets/css/bookETS.css" rel="stylesheet">
 
     <!-- Fonts -->
 
@@ -121,14 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- END MENU --> 
   <style>
-	
-	#userDetailInfo .btn-primary{
-		width:300px;
-	}
-	
-	.overlay{
-		padding:20px;
-	}
 	</style>
   </style>
   <section id="single-page-header">

@@ -20,6 +20,7 @@
           <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
             <li id="homePage"><a href="index.php">Accueil</a></li>
             <li id="booksPage"><a href="viewAllBooks.php">Livres</a></li>
+			<li id="reservationPage"><a href="viewAllReservation.php?userId=<?php echo $_SESSION['user']['id']; ?>">R&eacuteservation</a></li>
 			<?php if($_SESSION['user']['role'] == "admin" ){?>
 				<li id="adminPage"><a href="settings.php">Page d'administration</a></li>
 			

@@ -65,6 +65,7 @@
 
     <!-- Main Style -->
     <link href="assets/css/style.css" rel="stylesheet">
+	<link href="assets/css/bookETS.css" rel="stylesheet">
 
     <!-- Fonts -->
 
@@ -83,9 +84,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
 	<style>
 	
-		.overlay{
-			padding:20px;
-		}
 	</style>
   </head>
   <body> 
@@ -180,6 +178,32 @@
 				  <dt><label for="count">Nombre d'exemplaire</label></dt>
 				  <dd><?php echo $book['Count']?></dd>
 				</dl>
+				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialog_<?php echo $book['livre_id']; ?>">X</button>
+				<div id="dialog_<?php echo $book['livre_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+				  <div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<form id="reservationForm" method="POST" action="reservationRest.php">
+							<input type="hidden" name="method" value="PUT"/>
+							<input type="hidden" name="bookId" value="<?php echo $book['livre_id']; ?>"/>
+							<input type="hidden" name="userId" value="<?php echo $_SESSION['user']['id']; ?>"/>
+							<div class="form-group">
+								<label for="date_publish">Date de publication</label>
+								<div class="input-group">
+									<input type="date" class="form-control" id="date" name="date"/>
+								</div>
+							</div>
+							<div class="form-group">
+							  <select class="form-control" id="reservationLength" name="reservationLength">
+								<option value="7 day">7 jours</option>
+								<option value="14 day">14 jours</option>
+								<option value="1 month">1 mois</option>
+							  </select>
+							</div>
+							<button type="submit" class="btn">Réserver</button>
+						</form>
+					</div>
+				  </div>
+				</div>
 			</div>
 		</div>
 		<?php } ?>
@@ -316,6 +340,23 @@
           $(this).val(min);
       }       
     }); 
+	
+	$('#reservationForm').submit( function() {            
+        $.ajax({
+            url     : $(this).attr('action'),
+            type    : $(this).attr('method'),
+            data    : $(this).serialize(),
+            success : function( data ) {
+                        $('#reservationForm').html(data);
+						setTimeout(function(){location.reload();},500);
+					  },
+            error   : function( xhr, err ) {
+                        $
+                      }
+        });    
+        return false;
+    });
+	$('#date').attr("min", (new Date()).toISOString().slice(0,10));
 	
 	$('#navbar #booksPage').addClass('active');
   </script>

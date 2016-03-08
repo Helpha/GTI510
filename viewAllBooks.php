@@ -39,6 +39,7 @@
 
     <!-- Main Style -->
     <link href="assets/css/style.css" rel="stylesheet">
+	<link href="assets/css/bookETS.css" rel="stylesheet">
 
     <!-- Fonts -->
 
@@ -53,27 +54,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<style>
-		.overlay{
-			padding:20px;
-		}
 		
-		#addBook{
-			max-width:250px;
-		}
-		
-		#searchForm{
-			max-width:500px;
-		}
-		
-		#booksHeader{
-			margin-top:260px;
-		}
-		
-		.image{
-			max-width:180px;
-			max-height:250px;
-			margin-right:20px;
-		}
 	</style>
   </head>
   <body> 

@@ -48,7 +48,7 @@
 
     <!-- Main Style -->
     <link href="assets/css/style.css" rel="stylesheet">
-
+	<link href="assets/css/bookETS.css" rel="stylesheet">
     <!-- Fonts -->
 
     <!-- Open Sans for body font -->
@@ -62,21 +62,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	  <style>
-		.btn-success > span::before{
-			content:"Activé";
-		}
-		
-		.btn-danger > span::before{
-			content:"Désactivé";
-		}
-		
-		#usersAdminView .btn{
-			min-width: 100px;
-			margin-top: 10px;
-		}
-		.overlay{
-			padding:20px;
-		}
+
 	</style>
 	  <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
