@@ -142,8 +142,10 @@
                   <img class="image img-thumbnail img-responsive" src="<?php echo $book['Image_url'] ?>" style="float: left"/>
                  
                   <div style="float: left">
+				  <!--
                  <div style="float: right"><a href="viewAllBooks.php?action=res&id=82821">Réserver</a> &nbsp;<a href="viewAllBooks.php?action=edit&id=82821">Modifier</a> &nbsp; <a href="viewAllBooks.php?action=del&id=82821">Supprimer</a></div>
-                  <a href="bookDetail.php?isbn=<?php echo $book['isbn'];?>"<h4 class="service-title"/><?php echo $book['title'] ?></h4></a>
+                  -->
+				  <a href="bookDetail.php?isbn=<?php echo $book['isbn'];?>"<h4 class="service-title"/><?php echo $book['title'] ?></h4></a>
                   <p>Écrit par : <?php echo $book['author'] ?></p>
                   <p>ISBN : <?php echo $book['isbn'] ?></p>
                   <p>Date d'édition : <?php echo $book['date_publish'] ?></p>

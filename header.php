@@ -22,7 +22,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 col-sm-6 col-xs-6">
-            <div class="header-contact">
+            <!--<div class="header-contact">
               <ul>
                 <li>
                   <div class="phone">
@@ -37,7 +37,7 @@
                   </div>
                 </li>
               </ul>
-            </div>
+            </div>-->
           </div>
           <div class="col-md-6 col-sm-6 col-xs-6">
             <div class="header-login">

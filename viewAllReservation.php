@@ -141,10 +141,13 @@
 							<div id="dialog_<?php echo $reservation['reservation_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 							  <div class="modal-dialog modal-sm">
 								<div class="modal-content">
-									<img class="image img-thumbnail img-responsive center-block" src="<?php echo $book['Image_url'] ?>"/>
+									<h4 class="service-title"/><?php echo $book['title'] ?></h4>
+									<div class="center-block image">
+										<img class="image img-thumbnail img-responsive" src="<?php echo $book['Image_url'] ?>"/>
+									</div>
 									<p>Voulez-vous retiré la réservation?</p>
+									<button class="btn btn-default pull-right" onclick="$('#dialog_<?php echo $reservation['reservation_id']; ?>').modal('hide');">Annuler</button>
 									<button class="btn btn-primary pull-right deleteConfirmation" data-value="<?php echo $reservation['reservation_id']; ?>">Confirmer</button>
-									<button class="btn pull-right" onclick="$('#dialog_<?php echo $reservation['reservation_id']; ?>').modal('hide');">Annuler</button>
 								</div>
 							  </div>
 							</div>

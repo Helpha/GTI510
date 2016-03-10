@@ -25,10 +25,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Book…TS</title>
+    <title>Book&EacuteTS</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/icon" href="assets/images/favicon.ico"/>
     <!-- Font Awesome -->
@@ -121,7 +122,7 @@
 								<tr>
 									<td><?php echo $users[$i]['name']; ?></td>
 									<td><?php echo $users[$i]['email']; ?></td>
-									<td></td>
+									<td><a class="btn btn-info" href="viewAllReservation.php?userId=<?php echo $userId; ?>">Visionner</a></td>
 									<td id="user_row_<?php echo $userId ?>">
 										<button name="action" value="disable" class="btn <?php echo ($isEnable == 1 ? 'btn-success' : 'btn-danger') ?>" data-value="<?php echo ($isEnable ? 0 : 1); ?>" onclick="isEnable(<?php echo $userId ?>, this);"><span></span></button>
 									</td>

@@ -25,11 +25,11 @@
 }
 
 .btn-success > span::before{
-	content:"Activé";
+	content:"Actif";
 }
 
 .btn-danger > span::before{
-	content:"Désactivé";
+	content:"Inactif";
 }
 
 #usersAdminView .btn{
@@ -48,7 +48,7 @@
 #viewMainReservation .image{
 	max-width:90px !important;
 	max-height:125px !important;
-	margin-right:0px;
+	margin-right:auto;
 }
 
 .modal-content{

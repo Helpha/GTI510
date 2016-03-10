@@ -1,8 +1,11 @@
 <?php
 	session_start();
 	include_once('db/BookDB.php');
+	include_once('db/BookReservationDB.php');
 	
-	$bookDB = new BookDB();
+	$db = new DBHandler();
+	$bookDB = new BookDB($db);
+	$reserveDB = new BookReservationDB($db);
 	$book = NULL;
 	
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -175,10 +178,15 @@
 				  <dd><?php echo $book['author']?></dd>
 				  <dt><label for="date_publish">Date de publication</label></dt>
 				  <dd><?php echo $book['date_publish']?></dd>
-				  <dt><label for="count">Nombre d'exemplaire</label></dt>
+				  <dt><label for="count">Nombre d'exemplaire total</label></dt>
 				  <dd><?php echo $book['Count']?></dd>
+				  <dt><label for="freeToReserve">Nombre d'exemplaire disponible</label></dt>
+				  <dd><?php 
+					$reservations = $reserveDB->GetReservationsForBook($book['livre_id']);  
+					echo ($book['Count'] - count($reservations)); ?></dd>
 				</dl>
-				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialog_<?php echo $book['livre_id']; ?>">X</button>
+				<?php if($book['Count'] - count($reservations) > 0 ) { ?>
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog_<?php echo $book['livre_id']; ?>">Faire une réservation</button>
 				<div id="dialog_<?php echo $book['livre_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 				  <div class="modal-dialog modal-sm">
 					<div class="modal-content">
@@ -186,12 +194,12 @@
 							<input type="hidden" name="method" value="PUT"/>
 							<input type="hidden" name="bookId" value="<?php echo $book['livre_id']; ?>"/>
 							<input type="hidden" name="userId" value="<?php echo $_SESSION['user']['id']; ?>"/>
-							<div class="form-group">
+							<!--<div class="form-group">
 								<label for="date_publish">Date de publication</label>
 								<div class="input-group">
 									<input type="date" class="form-control" id="date" name="date"/>
 								</div>
-							</div>
+							</div>-->
 							<div class="form-group">
 							  <select class="form-control" id="reservationLength" name="reservationLength">
 								<option value="7 day">7 jours</option>
@@ -199,11 +207,12 @@
 								<option value="1 month">1 mois</option>
 							  </select>
 							</div>
-							<button type="submit" class="btn">Réserver</button>
+							<button type="submit" class="btn btn-primary">Réserver</button>
 						</form>
 					</div>
 				  </div>
 				</div>
+				<?php } ?>
 			</div>
 		</div>
 		<?php } ?>
