@@ -190,7 +190,7 @@
 				<div id="dialog_<?php echo $book['livre_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 				  <div class="modal-dialog modal-sm">
 					<div class="modal-content">
-						<form id="reservationForm" method="POST" action="reservationRest.php">
+						<form id="reservationForm" method="POST" action="reservationREST.php">
 							<input type="hidden" name="method" value="PUT"/>
 							<input type="hidden" name="bookId" value="<?php echo $book['livre_id']; ?>"/>
 							<input type="hidden" name="userId" value="<?php echo $_SESSION['user']['id']; ?>"/>

@@ -10,33 +10,37 @@
 		$name = $_POST["name"];
 		$confirmPwd = $_POST["confirmPwd"];
 		
-		$errorMessage = '';
+		$errorMessage = Array();;
 		If(trim($email) == '' || trim($password) == '' || trim($confirmPwd) == ''|| $name == '' ||
 		$email == NULL || $password == NULL || $name == NULL || $confirmPwd == NULL){
-			if($errorMessage != '')$errorMessage = $errorMessage."<br />";
-			$errorMessage = $errorMessage."Aucun champ ne peut être vide";
+			$errorMessage[] = "Aucun champ ne peut &ecirctre vide.";
 		}
 		if($userDB->UserOwnEmail($email)){
-			if($errorMessage != '')$errorMessage = $errorMessage."<br />";
-			$errorMessage = $errorMessage."Email déjà associé à un compte, ";
+			$errorMessage[] = "Email d&eacutej&agrave associ&eacute &agrave un compte.";
 		}
 		if($password != $confirmPwd){
-			if($errorMessage != '')$errorMessage = $errorMessage."<br />";
-			$errorMessage = $errorMessage."Le mot de passe de concorde pas avec la confirmation, ";
+			$errorMessage[] = "Le mot de passe ne concorde pas avec la confirmation.";
 		}
-		if($errorMessage == ''){
+		$errors = $userDB->PasswordIsValid($password);
+		for($i = 0; $i < count($errors);$i++){
+		$errorMessage[] = $errors[$i];
+		}
+		
+		if(count($errorMessage) == 0){
 			$userDB->Register($email, $name, $password);
 			$userDB->SignIn($email, $password);
 		}
 		
-		if($errorMessage == '' && isset($_SESSION['user']) && isset($_SESSION['user']['email']) && $_SESSION['user']['email'] == $email){
+		if(count($errorMessage) == 0 && isset($_SESSION['user']) && isset($_SESSION['user']['email']) && $_SESSION['user']['email'] == $email){
 		?>
-			{"status":"success", "message":"Compte créé"}
+			<span class="label label-success">Compte cr&eacute&eacute</span>
 		<?php
 		}else{
+			for($i = 0; $i < count($errorMessage); $i++){
 		?>
-			{"status":"danger", "message":"<?php echo $errorMessage; ?>"}
+			<span class='label label-danger'><?php echo $errorMessage[$i]; ?></span>
 		<?php
+			}
 		}
 		
 	}

@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 // Start the session
 session_start();
 
@@ -6,38 +6,42 @@ if(!isset($_SESSION['user']))
 	header("Location: index.php");
 include("db/UserDB.php");
 
-$errorMessage = '';
-$successMessage = '';
+$errorMessage = Array();
+$successMessage = Array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$db = new UserDB();
 	$email = isset($_POST['email']) ? $_POST['email'] : $_SESSION['user']['email'];
 	if($email != $_SESSION['user']['email'] && $db->UserOwnEmail($email)){
-		if($errorMessage != '')$errorMessage = $errorMessage."<br />";
-		$errorMessage = $errorMessage. "Un utilisateur utilise déjà ce email.";
+		$errorMessage[] = "Un utilisateur utilise d&eacutej&agrave ce email.";
 	}
 	$name = isset($_POST['username']) ? $_POST['username'] : $_SESSION['user']['name'];
 	if(trim($email) == ''){
-		if($errorMessage != '')$errorMessage = $errorMessage."<br />";
-		$errorMessage = $errorMessage. "Il faut un email valide";
+		$errorMessage[] = "Il faut un email valide";
 	}
 	if(trim($name) == ''){
-		if($errorMessage != '')$errorMessage = $errorMessage."<br />";
-		$errorMessage = $errorMessage. "Il faut un nom valide";
+		$errorMessage[] = "Il faut un nom valide";
 	}
 	$pwd = $_POST['password'];
 	$cPwd = $_POST['confirmPassword'];
-	if($pwd != NULL && $pwd != '' && $cPwd != NULL && $cPwd != '' && $pwd == $cPwd){
-		$db->ChangePassword($_SESSION['user']['id'], $pwd);
-	}	
-	else if($pwd != '' || $cPwd){
-		if($errorMessage != '')$errorMessage = $errorMessage."<br />";
-		$errorMessage = $errorMessage.'Le mot de passe et sa confirmation ne sont pas identique.';
+	if($pwd != NULL && $pwd != '' && $cPwd != NULL && $cPwd != ''){
+		$errors = $db->PasswordIsValid($pwd);
+		if($pwd != $cPwd){
+			$errorMessage[] = 'Le mot de passe et sa confirmation ne sont pas identique.';
+		}else if(count($errors) > 0){
+			$errors = $db->PasswordIsValid($pwd);
+			for($i = 0; $i < count($errors);$i++){
+			$errorMessage[] = $errors[$i];
+			}
+		}else {
+			$db->ChangePassword($_SESSION['user']['id'], $pwd);
+			$successMessage[] = "Mot de passe modifiÃ©.";
+		}
 	}
-	if($errorMessage == ''){
-		$db->UpdateUser($_SESSION['user']['id'],$email,$name, $_SESSION['user']['role'], $_SESSION['user']['isEnabled']);
-		$successMessage = $successMessage."Modification sauvegardé.";
-	}
+	if(count($errorMessage) == 0){
+			$db->UpdateUser($_SESSION['user']['id'],$email,$name, $_SESSION['user']['role'], $_SESSION['user']['isEnabled']);
+			$successMessage[] = "Modification sauvegard&eacute.";
+		}
 }
 ?>
 <!DOCTYPE html>
@@ -47,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>BookÉTS</title>
+    <title>BookÃ‰TS</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/icon" href="assets/images/favicon.ico"/>
     <!-- Font Awesome -->
@@ -134,10 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
  <div class="container">
         <div class="row">
-		<?php if($successMessage != ''){ ?>
-			<span class="label label-success"><span><?php echo $successMessage; ?></span></span>
-		<?php } if($errorMessage != ''){?>
-			<span class="label label-danger"><span><?php echo $errorMessage; ?></span></span>
+		<?php for($i = 0; $i < count($successMessage); $i++){ ?>
+			<span class="label label-success"><span><?php echo $successMessage[$i]; ?></span></span>
+		<?php } for($i = 0; $i < count($errorMessage); $i++){?>
+			<span class="label label-danger"><span><?php echo $errorMessage[$i]; ?></span></span>
 		<?php } ?>
 	<div id="formContainer" class="center-block">
 		<div id="userDetailInfo">

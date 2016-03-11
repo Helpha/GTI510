@@ -12,11 +12,11 @@
 		
 		if(isset($_SESSION['user']) && isset($_SESSION['user']['email']) && $_SESSION['user']['email'] == $email){
 		?>
-			{"status":"success", "message":"Connexion réussit <?php echo $_SESSION['user']['name']; ?>"}
+			<span class="label label-success">Compte créé</span>
 		<?php
 		}else{
 		?>
-			{"status":"danger", "message":"Il y a aucun compte avec ce email et ce mot de passe."}
+			<span class="label label-danger">Il n'y a aucun compte avec ce email et ce mot de passe.</span>
 		<?php
 		}	
 	}

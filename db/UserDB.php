@@ -107,5 +107,17 @@ class UserDB{
 		$stmt->bindParam(':id', $userId);
 		$stmt->execute();
 	}
+	
+	public function PasswordIsValid($password){
+		$errors = Array();
+		if(strlen($password)<8){
+			$errors[] = "Le mot de passe doit contenir un minimum de 8 caractères.";
+		}
+		$match = Array();
+		if( preg_match_all( "/[0-9]/", $password,$match) < 2){
+			$errors[] = "Le mot de passe doit contenir un minimum de 2 chiffres.";
+		}
+		return $errors;
+	}
 }
 ?>

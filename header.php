@@ -68,11 +68,11 @@
         </div>
         <div class="modal-body">
           <form id="signinForm" action="signin.php" method="POST">
-		    <div class="form-group">
-				<span class="label status"></span>
+		    <div class="form-group status">
+				<span class="label"></span>
 			</div>
             <div class="form-group">
-              <input type="text" name ="email" placeholder="Email" class="form-control">
+              <input type="email" name ="email" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
               <input type="password" name="pwd" placeholder="Mot de passe" class="form-control">
@@ -96,14 +96,14 @@
         </div>
         <div class="modal-body">
           <form id="signupForm" action="signup.php" method="POST">
-			  <div class="form-group">
-				<span class="label status"></span>
+			  <div class="form-group status">
+				<span class="label"></span>
 			  </div>
 			<div class="form-group">
-              <input name ="email" placeholder="Email" class="form-control">
+              <input type="email" name ="email" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
-              <input name="name" placeholder="Nom" class="form-control">
+              <input type="text" name="name" placeholder="Nom" class="form-control">
             </div>
             <!--<div class="form-group">
               <input placeholder="Username" class="form-control">
@@ -137,9 +137,8 @@
             type    : $(this).attr('method'),
             data    : $(this).serialize(),
             success : function( data ) {
-						var jsonResult = JSON.parse(data);
-						$('#signinForm .status').removeClass('label-success').removeClass('label-danger').addClass('label-'+jsonResult["status"]).html("<span>"+jsonResult["message"]+"</span>");						
-						if(jsonResult["status"] == "success")
+						$('#signinForm .status').html(data);
+						if (data.indexOf("label-success") >= 0)
 							setTimeout(function(){location.reload();},500);
 					  },
             error   : function( xhr, err ) {
@@ -155,9 +154,8 @@
             type    : $(this).attr('method'),
             data    : $(this).serialize(),
             success : function( data ) {
-                        var jsonResult = JSON.parse(data);
-						$('#signupForm .status').removeClass('label-success').removeClass('label-danger').addClass('label-'+jsonResult["status"]).html("<span>"+jsonResult["message"]+"</span>");
-						if(jsonResult["status"] == "success")
+						$('#signupForm .status').html(data);
+						if (data.indexOf("label-success") >= 0)
 							setTimeout(function(){location.reload();},500);
 					  },
             error   : function( xhr, err ) {
