@@ -53,6 +53,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
 	<style>
 		
 	</style>
@@ -109,13 +111,13 @@
 			<form id="searchForm" class="form-inline" METHOD="POST">
 				<div class="form-group">
 				  <select class="form-control" id="searchType" name="searchType">
-					<option value="title">Titre</option>
-					<option value="author">Auteur</option>
-					<option value="isbn">ISBN</option>
+					<option value="title" id="search_title">Titre</option>
+					<option value="author" id="search_author">Auteur</option>
+					<option value="isbn" id="search_isbn">ISBN</option>
 				  </select>
 				</div>
 				<div class="form-group" id="search">
-					<input type="text" style="color: black;" placeholder="Rechercher par auteur, titre ou ISBN" name="search" id="m_search" style="display: inline-block;">
+					<input type="text" style="color: black;" placeholder="Rechercher par auteur, titre ou ISBN" name="search" style="display: inline-block;">
 				</div>
 			  <button type="submit" class="btn btn-default">
 				<i class="fa fa-search"></i>
@@ -188,8 +190,7 @@
   </footer>
   <!-- End footer -->
 
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>    
+     
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <!-- Bootstrap -->
   <script src="assets/js/bootstrap.js"></script>
@@ -212,6 +213,12 @@
   <script type="text/javascript" src="assets/js/custom.js"></script>
   <script>
 	$('#navbar #booksPage').addClass('active');
+	<?php if(($_SERVER['REQUEST_METHOD'] === 'POST')) { ?>
+		$('#search > input').val('<?php echo $_POST['search']; ?>');
+		$("#searchType #search_<?php echo $_POST['searchType']; ?>").attr('selected', 'selected');
+	
+	
+	<?php } ?>
   </script>
     
   </body>
