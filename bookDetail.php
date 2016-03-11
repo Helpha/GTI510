@@ -118,7 +118,7 @@
                <div class="row">
                   <div class="col-md-6 col-sm-6 col-xs-12">
                      <div class="single-page-header-left">
-                        <h2><?php  if($book != NULL) {?> Détail sur <i><?php echo $book['title']?></i><?php }else{ ?> Ajout d'un livre <?php } ?> </h2>
+                        <h2><?php  if($book != NULL) {?> DÃ©tail sur <i><?php echo $book['title']?></i><?php }else{ ?> Ajout d'un livre <?php } ?> </h2>
                      </div>
                   </div>
                   <div class="col-md-6 col-sm-6 col-xs-12">
@@ -126,7 +126,7 @@
                         <ol class="breadcrumb">
                            <li><a href="index.php">Accueil</a></li>
                            <li><a href="viewAllBooks.php">Livres</a></li>
-                           <li class="active">Détail</li>
+                           <li class="active">DÃ©tail</li>
                         </ol>
                      </div>
                   </div>
@@ -187,7 +187,7 @@
                         echo ($book['Count'] - count($reservations)); ?></dd>
                      </dl>
                      <?php if($book['Count'] - count($reservations) > 0 ) { ?>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog_<?php echo $book['livre_id']; ?>">Faire une réservation</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog_<?php echo $book['livre_id']; ?>">Faire une rÃ©servation</button>
                         <div id="dialog_<?php echo $book['livre_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                            <div class="modal-dialog modal-sm">
                               <div class="modal-content">
@@ -208,7 +208,7 @@
                                           <option value="1 month">1 mois</option>
                                        </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Réserver</button>
+                                    <button type="submit" class="btn btn-primary">RÃ©server</button>
                                  </form>
                               </div>
                            </div>
@@ -228,7 +228,7 @@
                   </div>
                </div>
                <div class="form-group">
-                  <label for="title">Url de l'image représentative</label>
+                  <label for="title">Url de l'image reprÃ©sentative</label>
                   <div class="input-group">
                      <span class="input-group-addon">abc</span>
                      <input type="text" class="form-control" id="imageUrl" name="imageUrl" value="<?php echo $book['Image_url']; ?>"/>
@@ -370,7 +370,7 @@
 					echo ($book['Count'] - count($reservations)); ?></dd>
 				</dl>
 				<?php if($book['Count'] - count($reservations) > 0 ) { ?>
-				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog_<?php echo $book['livre_id']; ?>">Faire une réservation</button>
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog_<?php echo $book['livre_id']; ?>">Faire une rÃ©servation</button>
 				<div id="dialog_<?php echo $book['livre_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 				  <div class="modal-dialog modal-sm">
 					<div class="modal-content">
@@ -391,7 +391,7 @@
 								<option value="1 month">1 mois</option>
 							  </select>
 							</div>
-							<button type="submit" class="btn btn-primary">Réserver</button>
+							<button type="submit" class="btn btn-primary">RÃ©server</button>
 						</form>
 					</div>
 				  </div>
@@ -411,7 +411,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="title">Url de l'image représentative</label>
+				<label for="title">Url de l'image reprÃ©sentative</label>
 				<div class="input-group">
 					<span class="input-group-addon">abc</span>
 					<input type="text" class="form-control" id="imageUrl" name="imageUrl" value="<?php echo $book['Image_url']; ?>"/>
