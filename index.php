@@ -126,7 +126,7 @@ $genericDB->GetSettings();
         </div>
         <div class="col-md-6 col-sm-6">
           <div class="footer-right">
-            <a href="index.html"><i class="fa fa-facebook"></i></a>
+            <a href="index.php"><i class="fa fa-facebook"></i></a>
             <a href="#"><i class="fa fa-twitter"></i></a>
             <a href="#"><i class="fa fa-google-plus"></i></a>
             <a href="#"><i class="fa fa-linkedin"></i></a>
