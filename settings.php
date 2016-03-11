@@ -138,7 +138,7 @@
             <div class="single-page-header-right">
               <form METHOD="POST">
 				<div class="form-group">
-					<label for="email">Nombre maximum de réservations par utilisateur</label>
+					<label for="email">Nombre maximum de rÃ©servations par utilisateur</label>
 					<div>
 						<input type="number" id="maxRCount" min=<?php echo $_SESSION['settings']['minMaxReservationCount']; ?> max=<?php echo $_SESSION['settings']['maxMaxReservationCount']; ?> class="form-control" name="maxRCount" value="<?php echo $_SESSION['settings']['MaxReservationCount'];?>"/>
 					</div>

@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])){
 		if(true){
 		$reservationDB->AddReservation($date_start, $date_end, $_POST['bookId'], $_POST['userId']);
 		?>
-			<span class="label label-success center-block">Réservé avec succès</span>
+			<span class="label label-success center-block">RÃ©servÃ© avec succÃ¨s</span>
 		<?php
 		} else {
 			?>
