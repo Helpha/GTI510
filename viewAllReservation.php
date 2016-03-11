@@ -1,4 +1,4 @@
-<?php
+Ôªø<?php
 	session_start();
 
 	include_once("db/BookReservationDB.php");
@@ -21,11 +21,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Book…TS</title>
+    <title>Book√âTS</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/icon" href="assets/images/favicon.ico"/>
     <!-- Font Awesome -->
@@ -91,15 +91,15 @@
         <div class="row">
           <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="single-page-header-left">
-              <h2>RÈservation de <?php echo $user['name']; ?></h2>
-              <p>Afficher toute la liste de ses rÈservations</p>
+              <h2>R√©servation de <?php echo $user['name']; ?></h2>
+              <p>Afficher toute la liste de ses r√©servations</p>
             </div>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="single-page-header-right">
               <ol class="breadcrumb">
                 <li><a href="index.php">Accueil</a></li>
-                <li class="active">RÈservations</li>
+                <li class="active">R√©servations</li>
               </ol>
             </div>
           </div>
@@ -117,10 +117,10 @@
 				<thead>
 					<td>Livre</td>
 					<td>Titre</td>
-					<td>DÈbut</td>
+					<td>D√©but</td>
 					<td>Fin</td>
 					<td>Jours restant</td>
-					<td>TerminÈ</td>
+					<td>Termin√©</td>
 				</thead>
 				<tbody>
               <!-- Start single service -->
@@ -145,7 +145,7 @@
 									<div class="center-block image">
 										<img class="image img-thumbnail img-responsive" src="<?php echo $book['Image_url'] ?>"/>
 									</div>
-									<p>Voulez-vous retirÈ la rÈservation?</p>
+									<p>Voulez-vous retir√© la r√©servation?</p>
 									<button class="btn btn-default pull-right" onclick="$('#dialog_<?php echo $reservation['reservation_id']; ?>').modal('hide');">Annuler</button>
 									<button class="btn btn-primary pull-right deleteConfirmation" data-value="<?php echo $reservation['reservation_id']; ?>">Confirmer</button>
 								</div>

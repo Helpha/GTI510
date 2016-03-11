@@ -13,7 +13,7 @@ $genericDB->GetSettings();
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -126,7 +126,7 @@ $genericDB->GetSettings();
         </div>
         <div class="col-md-6 col-sm-6">
           <div class="footer-right">
-            <a href="index.html"><i class="fa fa-facebook"></i></a>
+            <a href="index.php"><i class="fa fa-facebook"></i></a>
             <a href="#"><i class="fa fa-twitter"></i></a>
             <a href="#"><i class="fa fa-google-plus"></i></a>
             <a href="#"><i class="fa fa-linkedin"></i></a>
