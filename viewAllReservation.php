@@ -218,7 +218,7 @@
 	
 	$('.deleteConfirmation').click(function(){
 		$.ajax({
-        url:'reservationREST.php',
+        url:'reservationRest.php',
         type:'POST',
         data:{id : $(this).attr('data-value'), method : "DELETE"},
         success:function(data){
