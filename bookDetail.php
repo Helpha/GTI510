@@ -376,7 +376,7 @@
          });    
          return false;
       });
-      $('#date').attr("min", (new Date()).toISOString().slice(0,10));
+      //$('#date').attr("min", (new Date()).toISOString().slice(0,10));
       
       $('#navbar #booksPage').addClass('active');
    </script>

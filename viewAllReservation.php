@@ -135,7 +135,12 @@
 						<td><?php echo $book['title']; ?></td>
 						<td><?php echo $reservation['date_start']; ?></td>
 						<td><?php echo $reservation['date_end']; ?></td>
-						<td></td>
+						<?php
+						//http://www.commentcamarche.net/forum/affich-1901352-php-calcul-du-temps-ecoule-entre-2-dates
+						$nbjours = round((strtotime($reservation['date_end']) - strtotime($reservation['date_start']))/(60*60*24)-1); 					
+						?>
+						
+						<td><?php echo $nbjours ?></td>
 						<td>
 							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialog_<?php echo $reservation['reservation_id']; ?>">X</button>
 							<div id="dialog_<?php echo $reservation['reservation_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -145,7 +150,7 @@
 									<div class="center-block image">
 										<img class="image img-thumbnail img-responsive" src="<?php echo $book['Image_url'] ?>"/>
 									</div>
-									<p>Voulez-vous retiré la réservation?</p>
+									<p>Voulez-vous retirer la réservation?</p>
 									<button class="btn btn-default pull-right" onclick="$('#dialog_<?php echo $reservation['reservation_id']; ?>').modal('hide');">Annuler</button>
 									<button class="btn btn-primary pull-right deleteConfirmation" data-value="<?php echo $reservation['reservation_id']; ?>">Confirmer</button>
 								</div>
