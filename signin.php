@@ -12,7 +12,7 @@
 		
 		if(isset($_SESSION['user']) && isset($_SESSION['user']['email']) && $_SESSION['user']['email'] == $email){
 		?>
-			<span class="label label-success">Compte créé</span>
+			<span class="label label-success">Connexion en cours</span>
 		<?php
 		}else{
 		?>
