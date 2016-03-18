@@ -138,10 +138,20 @@
 						<?php
 						//http://www.commentcamarche.net/forum/affich-1901352-php-calcul-du-temps-ecoule-entre-2-dates
 						$today = date("Y-n-j");  
-						$nbjours = round((strtotime($reservation['date_end']) - strtotime($today))/(60*60*24)-1); 					
+						$nbjours = round((strtotime($reservation['date_end']) - strtotime($today))/(60*60*24)); 					
+						if ($nbjours>=1)
+						{?>
+							<td><p style="color: green"><?php echo $nbjours ?></p></td><?php
+						}else if($nbjours==0){
+							?>
+							<td><p style="color: orange"><?php echo $nbjours ?></p></td><?php
+						}else{
+							?>
+							<td><p style="color: red"><?php echo $nbjours ?> : RETARD</p></td><?php
+						}
 						?>
 						
-						<td><?php echo $nbjours ?></td>
+						
 						<td>
 							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialog_<?php echo $reservation['reservation_id']; ?>">X</button>
 							<div id="dialog_<?php echo $reservation['reservation_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

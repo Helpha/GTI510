@@ -202,7 +202,9 @@
                                        </div>
                                     </div>-->
                                     <div class="form-group">
+                                    	<label>Veuillez choisir une durée</label>
                                        <select class="form-control" id="reservationLength" name="reservationLength">
+                                       	
                                           <option value="7 day">7 jours</option>
                                           <option value="14 day">14 jours</option>
                                           <option value="1 month">1 mois</option>
