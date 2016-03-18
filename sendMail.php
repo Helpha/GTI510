@@ -33,7 +33,7 @@
          
       }
    }
-   $Email = new MailSMTP();
-   echo ($Email->send("marqfrederic@gmail.com","allo","Reservation")) ? 'true' : 'false';
+   //$Email = new MailSMTP();
+   // echo ($Email->send("marqfrederic@gmail.com","allo","Reservation")) ? 'true' : 'false';
    
 ?>
