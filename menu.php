@@ -31,7 +31,7 @@
 		
 		<div id="navbar" class="navbar-collapse collapse">
           <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
-            <li class="active"><a href="index.html">Accueil</a></li>
+            <li class="active"><a href="index.php">Accueil</a></li>
           </ul>                     
         </div><!--/.nav-collapse -->
 		<?php } ?>
