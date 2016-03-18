@@ -16,7 +16,7 @@
 		<?php
 		}else{
 		?>
-			<span class="label label-danger">Il n'y a aucun compte avec ce email et ce mot de passe.</span>
+			<span class="label label-danger">Veuillez vérifier vos informations </span>
 		<?php
 		}	
 	}

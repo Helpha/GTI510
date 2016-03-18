@@ -65,7 +65,7 @@ class UserDB{
 	}
 	
 	public function SignIn($email, $password){
-		$stmt = $this->dbHandler->getInstance()->prepare("SELECT * FROM users where email = ? AND password = ?");
+		$stmt = $this->dbHandler->getInstance()->prepare("SELECT * FROM users where email = ? AND password = ? AND isEnabled = TRUE");
 		$stmt->execute(array($email, md5($password)));
 		$result = $stmt->fetch();
 		

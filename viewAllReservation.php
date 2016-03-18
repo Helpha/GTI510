@@ -119,7 +119,7 @@
 					<td>Titre</td>
 					<td>Début</td>
 					<td>Fin</td>
-					<td>Jours restant</td>
+					<td>Jours restants</td>
 					<td>Terminé</td>
 				</thead>
 				<tbody>
