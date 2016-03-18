@@ -188,10 +188,10 @@
                      </dl>
                      <?php if($book['Count'] - count($reservations) > 0 ) { ?>
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dialog_<?php echo $book['livre_id']; ?>">Faire une réservation</button>
-                        <div id="dialog_<?php echo $book['livre_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                        <div id="dialog_<?php echo $book['livre_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="Réserver?">
                            <div class="modal-dialog modal-sm">
                               <div class="modal-content">
-                                 <form id="reservationForm" method="POST" action="reservationRest.php">
+                                 <form id="reservationForm" method="POST" action="reservationREST.php">
                                     <input type="hidden" name="method" value="PUT"/>
                                     <input type="hidden" name="bookId" value="<?php echo $book['livre_id']; ?>"/>
                                     <input type="hidden" name="userId" value="<?php echo $_SESSION['user']['id']; ?>"/>
@@ -202,6 +202,7 @@
                                        </div>
                                     </div>-->
                                     <div class="form-group">
+										<label>Veuillez choisir une durée</label>
                                        <select class="form-control" id="reservationLength" name="reservationLength">
                                           <option value="7 day">7 jours</option>
                                           <option value="14 day">14 jours</option>
