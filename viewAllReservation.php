@@ -137,7 +137,8 @@
 						<td><?php echo $reservation['date_end']; ?></td>
 						<?php
 						//http://www.commentcamarche.net/forum/affich-1901352-php-calcul-du-temps-ecoule-entre-2-dates
-						$nbjours = round((strtotime($reservation['date_end']) - strtotime($reservation['date_start']))/(60*60*24)-1); 					
+						$today = date("Y-n-j");  
+						$nbjours = round((strtotime($reservation['date_end']) - strtotime($today))/(60*60*24)-1); 					
 						?>
 						
 						<td><?php echo $nbjours ?></td>
