@@ -5,6 +5,7 @@
 	include_once("db/BookDB.php");
 	include_once("db/UserDB.php");
 	
+   
 	$db = new DBHandler();
 	$bookDB = new BookDB($db);
 	$reservationDB = new BookReservationDB($db);
@@ -119,7 +120,7 @@
 					<td>Titre</td>
 					<td>Début</td>
 					<td>Fin</td>
-					<td>Jours restant</td>
+					<td>Jours restants</td>
 					<td>Terminé</td>
 				</thead>
 				<tbody>
@@ -137,10 +138,21 @@
 						<td><?php echo $reservation['date_end']; ?></td>
 						<?php
 						//http://www.commentcamarche.net/forum/affich-1901352-php-calcul-du-temps-ecoule-entre-2-dates
-						$nbjours = round((strtotime($reservation['date_end']) - strtotime($reservation['date_start']))/(60*60*24)-1); 					
+						$today = date("Y-n-j");  
+						$nbjours = round((strtotime($reservation['date_end']) - strtotime($today))/(60*60*24)); 					
+						if ($nbjours>=1)
+						{?>
+							<td><p style="color: green"><?php echo $nbjours ?></p></td><?php
+						}else if($nbjours==0){
+							?>
+							<td><p style="color: orange"><?php echo $nbjours ?></p></td><?php
+						}else{
+							?>
+							<td><p style="color: red"><?php echo $nbjours ?> : RETARD</p></td><?php
+						}
 						?>
 						
-						<td><?php echo $nbjours ?></td>
+						
 						<td>
 							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialog_<?php echo $reservation['reservation_id']; ?>">X</button>
 							<div id="dialog_<?php echo $reservation['reservation_id']; ?>" class="modal fade dialog" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

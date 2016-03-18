@@ -2,6 +2,7 @@
 include_once('db/BookReservationDB.php');
 include_once('db/BookDB.php');
 include_once('db/GenericDB.php');
+include_once('db/UserDB.php');
 
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])){
@@ -48,4 +49,3 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method'])){
 		}
 	}
 }
-?>
